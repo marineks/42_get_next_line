@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:24:14 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/08 13:03:56 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/06/08 13:32:52 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
+// Lib non autorisées, utilisées pour tester
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stddef.h>
 #include <stdlib.h>
 #endif

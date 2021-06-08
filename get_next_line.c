@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:31 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/08 13:19:23 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/06/08 13:53:11 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ int get_next_line(int fd, char **line)
     ret = read(fd, buffer, BUFFER_SIZE);
     while (ret > 0)
     {
+        printf("nb de boucles\n");
         buffer[ret] = '\0';
         *line = strdup(buffer);
+        printf("RET: %zu\n", ret);
         ret = read(fd, buffer, BUFFER_SIZE);
-        ret = 0;
+        printf("RET: %zu\n", ret);
+        //ret = 0;
     }
    return (0);
 }
