@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:16:07 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/08 13:36:32 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/06/28 11:33:04 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ size_t	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+char	*ft_strchr(const char *s, int c)
+{
+	char	*res;
+
+	res = (char *)s;
+	while (*res)
+	{
+		if (*res == (char)c)
+			return (res);
+		res++;
+	}
+	if (*res != (char)c)
+		return (NULL);
+	return (res);
 }
 
 size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)

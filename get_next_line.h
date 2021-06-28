@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:24:14 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/08 13:32:52 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/06/28 11:35:28 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,8 @@
 #include <unistd.h>
 #include <stddef.h>
 #include <stdlib.h>
+
+char	*ft_strchr(const char *s, int c);
+char *ft_strjoin(char const *s1, char const *s2);
+
 #endif

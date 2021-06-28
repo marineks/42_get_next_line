@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:31 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/10 18:21:26 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/06/28 11:42:41 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int get_next_line(int fd, char **line)
 {
     char buffer[BUFFER_SIZE + 1];
     static char *stock;
-    char *temp;
+    char *tmp;
     ssize_t ret;
 
     if (!fd || !line)
@@ -28,11 +28,25 @@ int get_next_line(int fd, char **line)
     {
             buffer[ret] = '\0';                                                 // 1st loop : buffer is "Cec\0"
             
-            // *line = strdup(strjoin(stock, buffer));                          // sensé rassembler les bouts de la ligne jusqu'au \n
-            *line = strdup(buffer);  
-            // printf("Un loop a été fait : |%s\n", *line);
-            // printf("RET: %zu\n", ret);
-            // ret = 0;
+            // *line = strdup(strjoin(stock, buffer));    
+            printf("Petit buffer : |%s|\n", buffer);                      // sensé rassembler les bouts de la ligne jusqu'au \n
+            tmp = strdup(buffer);  
+            printf("Tmp 1 : |%s|\n", tmp);
+            *line = ft_strjoin(stock, tmp);
+            ret = read(fd, buffer, BUFFER_SIZE); 
+            printf("\n");   
+
+            printf("Nouveau buffer : |%s|\n", buffer);
+            tmp = strdup(buffer); 
+            printf("Nv tmp : |%s|\n", tmp);
+            *line = ft_strjoin(stock, tmp);
+            printf("Stock: |%s|\n", stock);
+            printf("\n");
+            // while (ft_strchr(stock, '\n') == 0)
+            // {
+
+            // }   
+
         if (*buffer == '\n')
         {
             // printf("\nLe programme a trouvé un retour à la ligne\n");                             
@@ -52,16 +66,17 @@ int main()
     test= NULL;
 
     fd = open("test.txt", O_RDONLY);
-    get_next_line(fd, &test);
+    
+    printf("%d\n", get_next_line(fd, &test));
     printf("|%s|\n", test);
-    get_next_line(fd, &test);
-    printf("|%s|\n", test);
-    get_next_line(fd, &test);
-    printf("|%s|\n", test);
-    get_next_line(fd, &test);
-    printf("|%s|\n", test);
-    get_next_line(fd, &test);
-    printf("|%s|\n", test);
+    // get_next_line(fd, &test);
+    // printf("|%s|\n", test);
+    // get_next_line(fd, &test);
+    // printf("|%s|\n", test);
+    // get_next_line(fd, &test);
+    // printf("|%s|\n", test);
+    // get_next_line(fd, &test);
+    // printf("|%s|\n", test);
     free(test);
     close(fd);
     return (0);
