@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:16:07 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/28 11:33:04 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/06/29 20:13:18 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,25 +98,27 @@ char *ft_strjoin(char const *s1, char const *s2)
 	return (res);
 }
 
-void    *ft_memccpy(void *dst, const void *src, int c, size_t n)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-    unsigned char *ptr_dest;
-    unsigned char *ptr_source;
-    unsigned char occurence;
-    size_t i;
+	char	*new_string;
+	size_t	i;
+	size_t	size;
+	size_t	index;
 
-    ptr_dest = (unsigned char *)dst;
-    ptr_source = (unsigned char *)src;
-    occurence = (unsigned char)c;
-    i = 0;
-    while (i < n)
-    {
-        ptr_dest[i] = ptr_source[i];
-        if (ptr_dest[i] == occurence)
-        {
-            return (dst + 1 + i);
-        }
-        i++;
-    }
-return (NULL);
+	if (s == '\0')
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	size = ft_strlen(s) - start;
+	if (size > len)
+		size = len;
+	new_string = (char *)malloc((size + 1) * sizeof(char));
+	if (!new_string)
+		return (NULL);
+	i = (size_t)start;
+	index = 0;
+	while (index < size)
+		new_string[index++] = s[i++];
+	new_string[index] = '\0';
+	return (new_string);
 }
