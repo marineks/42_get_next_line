@@ -6,21 +6,24 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:16:07 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/06/29 20:13:18 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/01 09:32:17 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "get_next_line.h"
 
+
 size_t	ft_strlen(const char *str)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (str[i])
 		i++;
 	return (i);
 }
+
 char	*ft_strchr(const char *s, int c)
 {
 	char	*res;
@@ -54,15 +57,13 @@ size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		i++;
 	}	
 	dst[i] = '\0';
-
 	return (ft_strlen(src));
 }
 
 char *ft_strdup(const char *s1)
 {
 	char *copy;
-	
-	copy = (char *)malloc(ft_strlen(s1) + 1 * sizeof(char));
+	copy = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char));
 	if(!copy)
 		return NULL;
 	ft_strlcpy(copy, s1, ft_strlen(s1) + 1);
@@ -70,7 +71,7 @@ char *ft_strdup(const char *s1)
 	return (copy);
 }
 
-char *ft_strjoin(char const *s1, char const *s2)
+char *ft_strjoin(char *s1, char const *s2)
 {
 	char *res;
 	size_t i;
@@ -95,6 +96,7 @@ char *ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	res[i] = '\0';
+	free(s1);
 	return (res);
 }
 
