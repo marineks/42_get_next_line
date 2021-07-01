@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:31 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/01 07:50:51 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/01 08:27:18 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,12 @@ int get_next_line(int fd, char **line)
 				// printf("je suis dans le RET == 0\n");
 				*line = ft_strdup(stock);
 				free(stock);
-			 return (0);
+			 	return (0);
 			}
 			// printf("RET : |%zd|\n", ret);			// i'\n'e
 			// printf("2 Statut buffer : |%s|\n", buffer);
 			if (!ret)
 				return (-1);	
-			
 			tmp = strdup(buffer);                              
 			// printf("Tmp 1 : |%s|\n", tmp);
 						
@@ -121,37 +120,15 @@ int get_next_line(int fd, char **line)
 
 #include <stdio.h>
 
-// int main(void)
-// {
-// 	int		fd;
-// 	int		i;
-// 	int		ret;
-// 	char	*line;
-
-// 	fd = open("text.txt", O_RDONLY);
-// 	i = 1;
-
-// 	ret = 1;
-// 	// faut pas faire de do while c'est interdit attention c'est juste pour le main
-// 	while (ret > 0)
-// 	{
-// 		line = NULL;
-// 		ret = get_next_line(fd, &line);
-// 		printf("Ligne %2d |% d|%s|\n", i, ret, line);
-// 		free(line);
-// 		++i;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
-
 int main()
 {
 	int fd;
+	
 	char *test;
 	test= NULL;
-
-	fd = open("test.txt", O_RDONLY);
+	
+	fd = open("test2.txt", O_RDONLY);
+	
 	
 	printf("Retour (1, -1 ou 0) : %d\n", get_next_line(fd, &test));
 	printf("|%s|\n", test);
@@ -169,24 +146,12 @@ int main()
 	printf("|%s|\n", test);
 	get_next_line(fd, &test);
 	printf("|%s|\n", test);
-	get_next_line(fd, &test);
-	printf("|%s|\n", test);
+	// get_next_line(fd, &test);
+	// printf("|%s|\n", test);
 	// get_next_line(fd, &test);
 	// printf("|%s|\n", test);
 	free(test);
 	close(fd);
 	return (0);
 }
-
-
-//RELIQUAT ANCIENNE LOOP A LA MANO
-/* 
-// printf("\nNouveau buffer : |%s|\n", buffer);
-				
-				// tmp = strdup(buffer); 
-				// printf("Nv tmp : |%s|\n", tmp);
-				
-				// stock = ft_strjoin(stock, tmp);
-
-*/
 	
