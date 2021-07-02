@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:31 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/01 09:45:44 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/02 17:09:06 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char *ft_get_the_line(char *stock) // If "Salut\nc'est moi", expects malloc size
 	if (stock[i] == '\n' && stock[i + 1])
 	{
 		line = ft_strdup("\n");
+		free(stock);
 		return (line);
 	}
 	while (stock[i] != '\n')
@@ -28,7 +29,8 @@ char *ft_get_the_line(char *stock) // If "Salut\nc'est moi", expects malloc size
 	line = (char *)malloc(sizeof(char) * (i + 1)); // je sais pas pourquoi mais qd je rajoute + 1 ca marche?
 	if (!line)
 		return (NULL);
-	ft_strlcpy(line, stock, (i + 1)); // je sais pas pourquoi mais qd je rajoute + 1 ca marche?
+	ft_strlcpy(line, stock, (i + 1));
+	free(stock); // je sais pas pourquoi mais qd je rajoute + 1 ca marche?
 	return (line);
 }
 
@@ -52,8 +54,9 @@ char *ft_get_the_spare(char *stock) // If "Salut\nC'est moi", expects malloc siz
 	spare = (char *)malloc(sizeof(char) * (j + 1));
 	if (!spare)
 		return (NULL);
-	// printf("stock : %s\n | i: %d\n| start: %d\n | j: %d\n", stock, i, start, j);
+	// printf("stock : %s\n",  stock); // | i: %d\n| start: %d\n | j: %d\n", , i, start, j
 	spare = ft_substr(stock, start, (j + 1));
+	// free(stock);
 	return (spare);
 }
 
@@ -61,12 +64,12 @@ int get_next_line(int fd, char **line)
 {
 	char buffer[BUFFER_SIZE + 1];
 	static char *stock = NULL; 
-	char *tmp;
+	// char *tmp;
 	int ret;
 	
 	ret = 0;
-	tmp = NULL;
-	if (!fd || !line || BUFFER_SIZE <= 0)
+	// tmp = NULL;
+	if ((ret = read(fd, buffer, 0) == -1) || !fd || BUFFER_SIZE <= 0)
 		return (-1);					
 	if (stock == NULL)
 	{
@@ -74,10 +77,9 @@ int get_next_line(int fd, char **line)
 		buffer[ret] = '\0'; 
 		if (!ret)
 			return (-1); 
-		tmp = ft_strdup(buffer);
-		
-		stock = ft_strdup(tmp);
-		free(tmp);
+		// tmp = ft_strdup(buffer);
+		stock = ft_strdup(buffer);
+		// free(tmp);
 	}											
 	while (ft_strchr(stock, '\n') == NULL && stock)
 	{ 
@@ -86,17 +88,17 @@ int get_next_line(int fd, char **line)
 		if (ret == 0)
 		{
 			*line = ft_strdup(stock);
-			free(stock);
+			// free(stock);                     
 			return (0);
 		}
 		if (!ret)
 			return (-1);	
-		tmp = strdup(buffer);
-		stock = ft_strjoin(stock, tmp);
-		free(tmp);
+		// tmp = strdup(buffer);
+		stock = ft_strjoin(stock, buffer);
+		// free(tmp);
 	}
 	*line = ft_get_the_line(stock);
-	stock = ft_get_the_spare(stock);                            
+	stock = ft_get_the_spare(stock);                             
 	return (1);
 }
 	
