@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:16:07 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/02 16:47:17 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/05 17:48:40 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,27 @@ char	*ft_strchr(const char *s, int c)
 	return (res);
 }
 
-size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t ft_strlcpy(char *dst, char *src, size_t dstsize)
 {
 	size_t i;
 
 	i = 0;
-	if (dstsize == 0)
-	return (ft_strlen(src));
 	if (src == NULL)
-	{
 		return (0);
+	if (dstsize == 0)
+		return (ft_strlen(src));
+	if (dst == NULL)
+	{
+		dst = (char *)malloc(sizeof(char) * (ft_strlen(src)));
+		if (!dst)
+			return (0);
 	}
+	// printf("Source :%s\n", src);
 	while (src[i] && i < dstsize - 1)
 	{
+		// printf("random\n");
 		dst[i] = src[i];
+		// printf("i: %zu ft_strlen: %zu | DEST DE I : %c\n", i, ft_strlen(src), dst[i]);
 		i++;
 	}	
 	dst[i] = '\0';
@@ -67,19 +74,23 @@ char *ft_strdup(char *s1)
 	if(!copy)
 		return NULL;
 	ft_strlcpy(copy, s1, ft_strlen(s1) + 1);
-	// free(s1);
+	// if (s1)
+	// {
+	// 	free(s1);
+	// 	s1 = NULL;
+	// }
 	return (copy);
 }
 
-char *ft_strjoin(char *s1, char const *s2)
+char *ft_strjoin(char *s1, char *s2)
 {
 	char *res;
 	size_t i;
 	size_t j;
 
 	i = 0;
-	if (s1 == '\0' || s2 == '\0')
-		return (NULL);
+	if (s1 == NULL)
+		return (s2);
 	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!res)
 		return (NULL);
@@ -122,6 +133,10 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	while (index < size)
 		new_string[index++] = s[i++];
 	new_string[index] = '\0';
-	// free(s);
+	// if (s)
+	// {
+	// 	free(s);
+	// 	s = NULL;
+	// }
 	return (new_string);
 }
