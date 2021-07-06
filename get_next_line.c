@@ -6,60 +6,53 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:19:31 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/06 14:21:03 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:49:38 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <string.h>
 
-char *ft_get_the_line(char *stock) // If "Salut\nc'est moi", expects malloc size of "Salut\o"
+char *ft_get_the_line(char *stock)
 {
 	char *line;
 	int i;
+	int len;
 
 	i = 0;
-	if (stock[i] == '\n' && stock[i + 1] == '\n')
-	{
-		line = ft_strdup("\n");
-		free(stock);
-		return (line);
-	}
-	while (stock[i] != '\n')
-		i++;    					
+	line = NULL;
+	while (stock[i] != '\n' && stock[i] != '\0') // BOOLEENS
+		i++; 
+	len = i; 					
 	line = (char *)malloc(sizeof(char) * (i + 1));
 	if (!line)
 		return (NULL);
-	ft_strlcpy(line, stock, (i + 1));
-	free(stock);
+	i = 0;
+	while (stock[i] && i < len)
+	{
+		line[i] = stock[i];
+		i++;
+	}
+	line[i] = '\0';
 	return (line);
 }
 
-char *ft_get_the_spare(char *stock) // If "Salut\nC'est moi", expects malloc size of "C'est moi\o"
+void ft_get_the_spare(char *buffer)
 {
-	char *spare;
 	int i;
 	int j;
-	int start;
 
 	i = 0;
-	while (stock[i] != '\n')
+	while (buffer[i] != '\n')
 		i++;    
-	start = i + 1;
+	i = i + 1;
 	j = 0;
-	while (stock[i + 1])
+	while (i < BUFFER_SIZE)
 	{
+		buffer[j] = buffer[i];
 		i++;
 		j++;
 	}
-	// spare = (char *)malloc(sizeof(char) * (j + 1));
-	// if (!spare)
-	// 	return (NULL);
-	// printf("stock : %s\n",  stock); // | i: %d\n| start: %d\n | j: %d\n", , i, start, j
-	spare = ft_substr(stock, start, (j + 1));
-	// free(stock);
-	return (spare);
+	buffer[j] = '\0';
 }
 
 int get_next_line(int fd, char **line)
@@ -68,21 +61,11 @@ int get_next_line(int fd, char **line)
 	char *stock = NULL; 
 	int ret;
 	
-	if ((read(fd, buffer, 0) == -1) || !line || BUFFER_SIZE < 0)
+	if ((read(fd, buffer, 0) == -1) || !line || BUFFER_SIZE <= 0)
 		return (-1);					
 	ret = 1;
-	if (stock == NULL)
-	{
-		ret = read(fd, buffer, BUFFER_SIZE);
-		if (ret < 0)
-		{
-			free(stock);
-			return (-1);
-		}	 
-		buffer[ret] = '\0'; 
-		stock = ft_strdup(buffer);
-	}		
-	while (ft_strchr(stock, '\n') == NULL && stock)
+	stock = ft_strjoin(stock, buffer);
+	while (ft_strchr(stock, '\n') == NULL && ret > 0)
 	{ 
 		ret = read(fd, buffer, BUFFER_SIZE);
 		if (ret < 0)
@@ -91,17 +74,17 @@ int get_next_line(int fd, char **line)
 			return (-1);
 		}
 		buffer[ret] = '\0';
-		if (ret == 0)
+		stock = ft_strjoin(stock, buffer);	
+	}
+	if (ret == 0)
 		{
-			*line = ft_strdup(stock);
+			*line = ft_get_the_line(stock);
 			free(stock);                     
 			return (0);
 		}
-		// printf("stock : %s\n", stock);
-		stock = ft_strjoin(stock, buffer);
-	}
 	*line = ft_get_the_line(stock);
-	stock = ft_get_the_spare(stock);        
+	free(stock);
+	ft_get_the_spare(buffer);
 	return (1);
 }
 	
