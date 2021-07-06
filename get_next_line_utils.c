@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 11:16:07 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/06 16:33:10 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/06 16:36:18 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,4 @@ char	*ft_strjoin(char *s1, char *s2)
 	res[i] = '\0';
 	free(s1);
 	return (res);
-}
-
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	char	*new_string;
-	size_t	i;
-	size_t	size;
-	size_t	index;
-
-	if (s == '\0')
-		return (NULL);
-	size = ft_strlen(s) - start;
-	if (size > len)
-		size = len;
-	new_string = (char *)malloc((size + 1) * sizeof(char));
-	if (!new_string)
-		return (NULL);
-	i = (size_t)start;
-	index = 0;
-	while (index < size)
-		new_string[index++] = s[i++];
-	new_string[index] = '\0';
-	return (new_string);
 }
