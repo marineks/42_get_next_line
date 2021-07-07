@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 17:54:15 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/06 17:57:01 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/07 15:25:15 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ char *ft_get_the_line(char *stock)
 	return (line);
 }
 
-void ft_get_the_spare(char *buffer[fd])
+void ft_get_the_spare(char *buffer)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (buffer[fd][i] != '\n')
+	while (buffer[i] != '\n')
 		i++;    
 	i = i + 1;
 	j = 0;
 	while (i < BUFFER_SIZE)
 	{
-		buffer[fd][j] = buffer[fd][i];
+		buffer[j] = buffer[i];
 		i++;
 		j++;
 	}
-	buffer[fd][j] = '\0';
+	buffer[j] = '\0';
 }
 
 int get_next_line(int fd, char **line)

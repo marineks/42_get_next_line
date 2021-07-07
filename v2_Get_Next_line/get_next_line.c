@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 15:35:09 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/07 16:41:21 by msanjuan         ###   ########.fr       */
+/*   Created: 2021/07/07 16:49:42 by msanjuan          #+#    #+#             */
+/*   Updated: 2021/07/07 18:26:12 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_get_the_line(char *stock)
 	while (stock[i] != '\n' && stock[i] != '\0')
 		i++;
 	len = i;
-	line = (char *)malloc(sizeof(char) * (i + 1));
+	line = (char *)malloc(sizeof(char) * (i + 2));		// chgt new sujet +2
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -32,7 +32,8 @@ char	*ft_get_the_line(char *stock)
 		line[i] = stock[i];
 		i++;
 	}
-	line[i] = '\0';
+	line[i] = '\n';				// chgt new sujet
+	line[i + 1] = '\0';			// chgt new sujet
 	return (line);
 }
 
@@ -55,32 +56,34 @@ void	ft_get_the_spare(char *buffer)
 	buffer[j] = '\0';
 }
 
-int	ft_stopEOF_or_giveLine(int ret, char **line, char *stock, char *buffer)
+char	*ft_stopEOF_or_giveLine(int ret, char *stock, char *buffer)
 {
+	char		*line;
+
 	if (ret == 0)
 	{
-		*line = ft_get_the_line(stock);
+		line = ft_get_the_line(stock);
 		free(stock);
-		return (0);
 	}
 	else
 	{
-		*line = ft_get_the_line(stock);
+		line = ft_get_the_line(stock);
 		free(stock);
 		ft_get_the_spare(buffer);
-		return (1);
 	}
+	return (line);
 }
 
-int	get_next_line(int fd, char **line)
+char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*stock;
 	int			ret;
 
 	stock = NULL;
-	if ((read(fd, buffer, 0) == -1) || !line || BUFFER_SIZE <= 0)
-		return (-1);
+	// line = NULL;
+	if ((read(fd, buffer, 0) == 1) || BUFFER_SIZE <= 0)
+		return (NULL);
 	ret = 1;
 	stock = ft_strjoin(stock, buffer);
 	while (ft_strchr(stock, '\n') == NULL && ret > 0)
@@ -89,10 +92,15 @@ int	get_next_line(int fd, char **line)
 		if (ret < 0)
 		{
 			free(stock);
-			return (-1);
+			return (NULL);
 		}
 		buffer[ret] = '\0';
 		stock = ft_strjoin(stock, buffer);
 	}
-	return (ft_stopEOF_or_giveLine(ret, line, stock, buffer));
+	if (ft_strlen(stock) == 0)
+	{
+			free(stock);
+			return (NULL);
+	}
+	return (ft_stopEOF_or_giveLine(ret, stock, buffer));
 }

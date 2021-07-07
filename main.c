@@ -14,9 +14,9 @@ int main()
 	
     test = NULL;
 	ret = 0;
-	// fd = open("test2.txt", O_RDONLY);
-	fd = open("gnlTester/files/41_with_nl", O_RDONLY);
-	if (!(fd = open("gnlTester/files/41_with_nl", O_RDONLY)))
+	fd = open("test.txt", O_RDONLY);
+	// fd = open("gnlTester/files/41_with_nl", O_RDONLY);
+	if (!(fd = open("test.txt", O_RDONLY)))
 	{
 		printf("\nError in open\n");
 		return (0);
@@ -26,6 +26,7 @@ int main()
 		printf("|%s|\n", test);
 		free(test);
 	}
+	// get_next_line(fd, &test);
 	printf("|%s|\n", test);
 	free(test);
 	printf("\n");
