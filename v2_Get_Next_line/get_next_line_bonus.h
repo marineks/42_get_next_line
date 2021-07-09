@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 16:51:10 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/07 17:13:28 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/09 16:44:43 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
-char	*ft_substr(char *s, unsigned int start, size_t len);
-size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
 

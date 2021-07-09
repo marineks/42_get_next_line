@@ -6,24 +6,24 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 16:50:52 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/07 17:17:29 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/09 17:48:49 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char *ft_get_the_line(char *stock)
+char	*ft_get_the_line(char *stock)
 {
-	char *line;
-	int i;
-	int len;
+	char	*line;
+	int		i;
+	int		len;
 
 	i = 0;
 	line = NULL;
-	while (stock[i] != '\n' && stock[i] != '\0') // BOOLEENS
-		i++; 
-	len = i; 					
-	line = (char *)malloc(sizeof(char) * (i + 2));
+	while (stock[i] != '\n' && stock[i] != '\0')
+		i++;
+	len = i + 1;
+	line = (char *)malloc(sizeof(char) * (i + 1));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -32,19 +32,18 @@ char *ft_get_the_line(char *stock)
 		line[i] = stock[i];
 		i++;
 	}
-	line[i] = '\n';				// chgt new sujet
-	line[i + 1] = '\0';			// chgt new sujet
+	line[i] = '\0';
 	return (line);
 }
 
-void ft_get_the_spare(char *buffer)
+void	ft_get_the_spare(char *buffer)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (buffer[i] != '\n')
-		i++;    
+		i++;
 	i = i + 1;
 	j = 0;
 	while (i < BUFFER_SIZE)
@@ -58,17 +57,22 @@ void ft_get_the_spare(char *buffer)
 
 char	*ft_stopEOF_or_giveLine(int ret, char **line, char *stock, char *buffer)
 {
-	if (ret == 0)
+	char	*line;
+
+	line = NULL;
+	if (ft_strlen(stock) == 0)
 	{
-		*line = ft_get_the_line(stock);
 		free(stock);
+		return (NULL);
 	}
+	if (ret == 0)
+		line = ft_get_the_line(stock);
 	else
 	{
-		*line = ft_get_the_line(stock);
-		free(stock);
+		line = ft_get_the_line(stock);
 		ft_get_the_spare(buffer[fd]);
 	}
+	free(stock);
 	return (line);
 }
 
@@ -76,12 +80,10 @@ char	*get_next_line(int fd)
 {
 	static char	buffer[1024][BUFFER_SIZE + 1];
 	char		*stock;
-	char		*line;
 	int			ret;
 
 	stock = NULL;
-	line = NULL;
-	if ((read(fd, buffer, 0) < 1) || BUFFER_SIZE <= 0)
+	if ((read(fd, buffer, 0) == -1) || BUFFER_SIZE <= 0)
 		return (NULL);
 	ret = 1;
 	stock = ft_strjoin(stock, buffer[fd]);
@@ -96,5 +98,5 @@ char	*get_next_line(int fd)
 		buffer[fd][ret] = '\0';
 		stock = ft_strjoin(stock, buffer[fd]);
 	}
-	return (ft_stopEOF_or_giveLine(ret, line, stock, buffer));
+	return (ft_stopEOF_or_giveLine(ret, stock, buffer[fd]));
 }
