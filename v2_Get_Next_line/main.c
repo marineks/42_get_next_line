@@ -6,7 +6,7 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:35:23 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/09 17:05:31 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:56:28 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main()
     int		fd;
     char    *line;
 
-    fd = open("tests/paragraph_alternate_nl", O_RDONLY);
+    fd = open("tests/small_para_with_nl", O_RDONLY);
     if (fd < 0)
         printf("\e[31mError: open failed\e[0m\n");
     else

@@ -15,7 +15,7 @@ int main()
     test = NULL;
 	ret = 0;
 	fd = open("test.txt", O_RDONLY);
-	// fd = open("gnlTester/files/41_with_nl", O_RDONLY);
+	// fd = open("gnlTester/files/alternate_nl_with_nl", O_RDONLY);
 	if (!(fd = open("test.txt", O_RDONLY)))
 	{
 		printf("\nError in open\n");

@@ -6,11 +6,24 @@
 /*   By: msanjuan <msanjuan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 16:49:42 by msanjuan          #+#    #+#             */
-/*   Updated: 2021/07/09 17:48:33 by msanjuan         ###   ########.fr       */
+/*   Updated: 2021/07/12 19:13:15 by msanjuan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+# include <stdio.h>
+
+int	ft_malloc_count(char *stock)
+{
+	int i;
+
+	i = 0;
+	if (ft_strchr(stock, '\n') == NULL)
+		return (ft_strlen(stock));
+	while (stock[i] != '\n' && stock[i] != '\0')
+		i++;
+	return (i + 1);
+}
 
 char	*ft_get_the_line(char *stock)
 {
@@ -18,12 +31,9 @@ char	*ft_get_the_line(char *stock)
 	int		i;
 	int		len;
 
-	i = 0;
 	line = NULL;
-	while (stock[i] != '\n' && stock[i] != '\0')
-		i++;
-	len = i + 1;
-	line = (char *)malloc(sizeof(char) * (i + 1));
+	len = ft_malloc_count(stock);
+	line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -55,7 +65,7 @@ void	ft_get_the_spare(char *buffer)
 	buffer[j] = '\0';
 }
 
-char	*ft_stopEOF_or_giveLine(int ret, char *stock, char *buffer)
+char	*ft_line_results(int ret, char *stock, char *buffer)
 {
 	char		*line;
 
@@ -65,13 +75,9 @@ char	*ft_stopEOF_or_giveLine(int ret, char *stock, char *buffer)
 		free(stock);
 		return (NULL);
 	}
-	if (ret == 0)
-		line = ft_get_the_line(stock);
-	else
-	{
-		line = ft_get_the_line(stock);
+	line = ft_get_the_line(stock);
+	if (ret > 0)
 		ft_get_the_spare(buffer);
-	}
 	free(stock);
 	return (line);
 }
@@ -98,5 +104,5 @@ char	*get_next_line(int fd)
 		buffer[ret] = '\0';
 		stock = ft_strjoin(stock, buffer);
 	}
-	return (ft_stopEOF_or_giveLine(ret, stock, buffer));
+	return (ft_line_results(ret, stock, buffer));
 }
